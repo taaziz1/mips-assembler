@@ -1,0 +1,21 @@
+# Ths program computes the sum of numbers from 1 to N
+.data
+	N:		.byte 	10
+	SUM:	.byte	0
+
+.TEXT
+	LA		$1, N
+	LB 		$1, 0($1)     # $1 = N
+	ADD     $2,  $0,  $0  # index = 0
+	ADD     $3,  $0,  $0  # sum = 0
+
+LOOP:
+	ADDI	$2,  $2, 1		# index++
+	ADD		$3,  $3, $2		# sum += index
+
+	BNE     $2, $1, LOOP   # do until index==N
+
+DONE:
+	LA		$1,  SUM
+	SB		$3   0($1)		# Store the sum in the memory
+	stop

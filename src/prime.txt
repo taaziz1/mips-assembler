@@ -1,0 +1,28 @@
+.DATA
+	A:	.byte          94
+	ANSWER:	.byte       1             # default is_prime
+
+.TEXT
+MAIN:
+	LA		$7,	A
+	LB		$6,	0($7)				# $6 = A
+	LB		$1,	0($7)				# $1 = A
+
+	ADDI	$2,	$0,    2			# $2 = divisor (starting at 2)
+
+DIV:
+	SLT 	$3, $1, $2				# $3 = (A < B)? 1: 0
+	BNE		$3,	$0,	REM				# check if $1 has the remainder
+	SUB		$1,	$1,	$2				# A = A-B
+	J		DIV
+REM:
+	BEQ		$1, $0, COMPOSITE    # Remainder in $1 == 0
+	ADDI	$2,	$2,	1			# B = B + 1
+	BNE		$2,	$6, DIV			# Jump to DIV if $2 i!= A
+	J		IS_PRIME				# A is a prime
+COMPOSITE:
+	LA		$7,  ANSWER
+	SB		$0, 0($7)
+IS_PRIME:
+	stop
+

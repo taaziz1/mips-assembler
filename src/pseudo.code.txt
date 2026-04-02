@@ -1,0 +1,16 @@
+.DATA
+	A: 	.space 12
+	B:
+
+.TEXT
+main:
+	LA		$1,	A
+	move	$1,	$2
+	Li      $2, 0
+	Li      $3, 2
+	Li      $5, 121
+	SLL     $1, $2,  3
+	nop
+	ADDI    $1,  $0,  -128
+	ADDI    $1,  $0,  31
+	stop

@@ -1,0 +1,32 @@
+#Example 4:
+# The following program counts the number  of 1's  in a list of bytes
+# that starts in the first byte of data memory and ends with a sentinel 0x00.
+# Skip all the even bytes. That is, only count 1's in odd numbers.
+# The count of 1's for odd numbers is then stored in the byte location RESULT
+
+.data
+	A:      .byte -1, -1, 1, 0
+	RESULT:      .SPACE 0
+.text
+MAIN:
+  LA        $2,  A
+  ADD       $3,  $0, $0
+OuterLoop:
+  LB        $1,  0($2)
+  BEQ       $1,   $0, DONE
+  ADDI      $6,   $0, 1
+  ADDI      $4,   $0, 8
+InnerLOOP:
+  AND       $5,  $1, $6
+  BEQ       $5,  $0, SKIP
+  ADDI      $3,  $3,   1
+SKIP:
+  ADD       $6,  $6,  $6
+  ADDI      $4,   $4, -1
+  BNE       $4,   $0,  InnerLOOP
+NEXT:
+  ADDI      $2,   $2,   1
+	J       OuterLoop
+DONE:
+  SB        $3,   0($2)
+  stop

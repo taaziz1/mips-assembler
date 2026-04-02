@@ -1,0 +1,17 @@
+# implement do while loop
+.data
+	ARRAY: 	.byte 0,1,2,3,4,5,6,7,8,9
+	SUM:	.byte 0
+
+.text
+	LI		$1, 0    	# sum
+	LA		$2, ARRAY	# pointer to ARRAY, starting t the base address
+	LA		$3, SUM
+LOOP:
+	LB      $4, 0($2)	# $4 = A+0
+	ADD		$1, $1, $4  # sum +=  *A
+	ADDI	$2,	$2,	1   # advance point by 1 byte,  $2 += 1
+	BNE     $2, $3,  LOOP    # LOOP continue if $2 != $3
+DONE:
+	SB		$1, 0($3)
+	stop

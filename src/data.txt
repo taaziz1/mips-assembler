@@ -1,0 +1,7 @@
+.data
+	A: .byte 2
+	B: .byte -122, -123
+	C: .space 10
+	D: .byte 0
+.text
+	stop

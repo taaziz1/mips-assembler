@@ -1,0 +1,50 @@
+#Example 4:
+# The following program computes the product of two single-hex-digit integers
+# that are stored in the first two locations of data memory.
+# The product is then stored in the 3rd byte of the data memory.
+
+.data
+    A:  .byte  15, 15
+    B:  .byte 0
+.text
+
+.text
+MAIN:
+  LB        $1,  0($0)
+
+  LB        $2,  1($0)
+
+  ADD       $3,  $0, $0
+
+
+  ADDI      $6,   $0, 1
+
+
+  ADDI      $4,   $0, 4
+
+
+LOOP:
+  AND       $5,  $2, $6
+
+
+  BEQ       $5,  $0, SKIP
+
+  ADD       $3,  $3,  $1
+
+
+SKIP:
+  ADD       $1,  $1,  $1
+
+
+  ADD       $6,  $6,  $6
+
+
+  ADDI      $4,   $4, -1
+
+
+  BNE       $4,   $0,  LOOP
+
+
+DONE:
+  SB        $3,   2($0)
+  stop

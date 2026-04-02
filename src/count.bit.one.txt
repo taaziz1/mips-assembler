@@ -1,0 +1,32 @@
+#Example 4:
+# The following program counts the number  of 1-bit in
+# in the first byte of data memory.
+# The count of 1-bit is then stored in the 2nd byte of the data memory.
+.data
+	A:     .byte -4, 1, 0
+.text
+MAIN:
+  LA        $7,  A
+  LB        $1,  0 ($7)
+  ADD       $3,  $0, $0
+
+  ADDI      $6,   $0, 1
+
+  ADDI      $4,   $0, 8
+
+LOOP:
+  AND       $5,  $1, $6
+
+  BEQ       $5,  $0, SKIP
+  ADDI      $3,  $3,   1
+
+SKIP:
+  ADD       $6,  $6,  $6
+
+  ADDI      $4,   $4, -1
+
+  BNE       $4,   $0,  LOOP
+
+DONE:
+  SB        $3,   1 ($7)
+	stop

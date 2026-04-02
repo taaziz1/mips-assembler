@@ -1,0 +1,33 @@
+# Example 5:
+# The following program computes the division of two integers with dividend and divisor
+# being stored in the first two locations of data memory.
+# The quotient and remainder are stored respectively as bytes 3 and 4 in the
+# data memory. The picture shows that
+# the dividend is 23 and
+# the divisor is 7
+# The quotient is 03 and the remainder is 2 (0x02).
+
+.data
+	A:   .byte  23, 7
+	B:   .byte  0, 0
+.text
+MAIN:
+	LA      $7,  A
+  	LB        $1,  0($7)
+  	LB        $2,  1($7)
+  	ADD       $3,  $0,  $0
+
+  	ADD       $4,   $0, $1
+
+WHILE:
+  	SLT       $5,  $4,  $2
+  	BNE       $5,  $0,   done
+  	SUB       $4,   $4, $2
+
+  	ADDI      $3,   $3,  1
+
+  J         WHILE
+done:
+	SB      $3,   2($7)
+	SB      $4,   3($7)
+	stop

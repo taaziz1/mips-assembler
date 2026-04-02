@@ -1,0 +1,60 @@
+# The following program computes the product of two single-byte integers
+# that are stored in the first two locations of data memory.
+# The product is then stored in the 3rd byte of the data memory.
+
+.data
+	A:	.byte  15, 17
+	B:  .byte 0
+
+.text
+MAIN:
+  LA        $7,  A
+  LB        $1,  0( $7 )
+
+  LB        $2,  1( $7 )
+
+  ADD       $3,  $0, $0
+
+
+  ADDI      $6,   $0, 1
+
+
+  ADDI      $4,   $0, 8
+
+
+LOOP:
+  AND       $5,  $2, $6
+
+
+  BEQ       $5,  $0, SKIP
+
+  ADD       $3,  $3,  $1
+
+
+SKIP:
+  ADD       $1,  $1,  $1
+
+
+  ADD       $6,  $6,  $6
+
+
+  ADDI      $4,   $4, -1
+
+
+  BNE       $4,   $0,  LOOP
+
+
+DONE:
+  LB        $1,  0 ($7)
+
+  LB        $2,  1 ($7)
+
+  SB        $3,  2 ($7)
+
+  MUL       $6, $1, $2
+
+  SB        $6,  3 ($7)
+  ADD       $5,  $0, $0
+  ADD       $6,  $0, $0
+  ADD       $7,  $0, $0
+  stop

@@ -1,0 +1,32 @@
+#Example 3:
+# The following program implements Euclidean algorithm to compute the GCD of
+#  two numbers stored in the first two bytes of data memory.
+# The result is stored in the 3rd byte of the data memory.
+
+.data
+	A:      .byte 	121       #,21,35
+	B:		.byte 	99
+	GCD:	.byte 0
+
+.text
+
+MAIN:
+	LA       $7,  A
+  	LB       $1,  0($7)    #  A
+  	LB       $2,  1($7)    #  B
+WHILE:
+  	BEQ       	$2,   $0,  GCD_IS_A
+DIV:
+	SLT         $3,	  $1,    $2
+    BNE         $3,   $0,    GET_REMAINDER
+	SUB         $1,   $1,    $2
+	J           DIV
+GET_REMAINDER:
+	MOVE	  	$3,  $1
+	MOVE	  	$1,  $2
+	MOVE	  	$2,  $3
+	J       	WHILE
+GCD_IS_A:
+  	SB        $1, 2($7)
+EXIT:
+stop

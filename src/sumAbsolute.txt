@@ -1,0 +1,43 @@
+#Example 2:
+#The following program computes the sum of the absolute value of integers
+# in a list  that begins at location 0 and ends with a sentinel number 0x00
+# in the data memory.
+# The sum is stored at the locaton "B"
+
+.data
+	A:		.byte  -1, -2, 3, 4, 5, 6, 0
+	B:      .byte  0
+
+.text
+MAIN:
+  ADD   	$1,$zero,$zero 	# $1=sum=0 :
+							# 0010,000,000,001,000
+							# hex code: 2008
+  LA        $2, A
+LOOP:
+  LB        $3,   0($2)     # load the number
+							# 0100 010 011 000 000
+							# hex code: 44c0
+  BEQ       $3,   $0, DONE  # 1110  011 000 000 110   6
+							# hex code: e606
+  SLT       $4,   $3, $0    # 0111 011 000 100 000
+							# hex code: 7620
+  BEQ       $4,   $0, NON_NEGATIVE # 1
+							# 1110 100 000 000 001
+							# hex code: E801
+  SUB       $3,   $0, $3    # 0110  000  011 011 000
+						    # hex code: 60D8
+NON_NEGATIVE:
+  ADD		$1,   $1, $3	# 0010,001,011,001,000
+							# hex code: 22c8
+							# $1 += $2 (sum)
+  ADDI      $2,   $2,  1    # index++
+							# 0011,010,010,000001
+                            # hex code: 3481
+  J        	LOOP        	# JUMP to absolute address LOOP
+							# hex code: F002
+DONE:
+  SB		$1, 1($2)       # 0101, 010, 001, 000 001
+							# hex code: 5441
+							# store sum in $1 to the end of the array
+	stop

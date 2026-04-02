@@ -1,0 +1,132 @@
+# GCD(A,B)
+# The following program computes the GCD of two integers stored in
+# the first two bytes of data memory.
+# The result is stored in the 3rd byte of the data memory.
+
+.data
+	A:	.byte   90,60
+	B:	.byte   0,0, 0
+
+.text
+MAIN:
+GCD:
+	LA		$7, A
+  	LB      $1, 0($7)
+
+  	LB      $2, 1($7)
+
+A1:
+  add       $3,   $2, $0
+
+LOOP1:
+  BEQ       $2, $0, DONE1
+
+  SLT       $4,  $1,  $2
+
+  BNE       $4,  $0,  DONE
+
+  sub       $1,   $1, $2
+
+  J         LOOP1
+
+DONE:
+  add       $2,   $1, $0
+
+  add       $1,   $0,  $3
+
+  J         A1
+
+DONE1:
+	SB      $1,   2($7)
+
+
+# LCM (A,B) = B/GCD(A,B)*A
+# The following program computes the division of two integers with dividend and divisor
+# being stored in the first two locations of data memory.
+# The quotient and remainder are stored respectively as the 3rd and 4th byte in the
+# data memory. The picture shows that the dividend is 7 (0x07) and the divisor is
+# 3 (0x03). The quotient is 02 (0x02) and the remainder is 1 (0x01).
+DIVISION:
+  LB        $1,  1($7)
+
+  LB        $2,  2($7)
+
+  ADD       $3,  $0,  $0
+
+
+  ADD       $4,   $0, $1
+
+
+LOOP:
+  SLT       $5,  $4,  $2
+
+  BNE       $5,  $0,  DONE3
+
+  SUB       $4,   $4, $2
+
+
+  ADDI      $3,   $3,  1
+
+
+  J         LOOP
+
+DONE3:
+	SB      $3, 4($7)
+
+	SB      $4, 5($7)
+
+
+#Example 4:
+# Multiplication
+# The following program computes the product of two single-hex-digit integers
+# that are stored in the first two locations of data memory.
+# The product is then stored in the 3rd byte of the data memory.
+
+MULTIPLICATION:
+  LB        $1,  0($7)
+
+  LB        $2,  4($7)
+
+  ADD       $3,  $0, $0
+
+
+  ADDI      $6,   $0, 1
+
+
+  ADDI      $4,   $0, 4
+
+
+LOOP2:
+  AND       $5,  $2, $6
+
+
+  BEQ       $5,  $0, SKIP
+
+  ADD       $3,  $3,  $1
+
+
+SKIP:
+  ADD       $1,  $1,  $1
+
+
+  ADD       $6,  $6,  $6
+
+
+  ADDI      $4,   $4, -1
+
+
+  BNE       $4,   $0,  LOOP2
+
+
+  SB        $3,   3($7)
+
+
+	LB      $1, 0( $7)
+	LB      $2, 1( $7)
+	LB      $3, 2( $7)
+	LB      $4, 3( $7)
+	LB      $5, 4( $7)
+	LB      $6, 5( $7)
+	ADD     $7, $0, $0
+
+stop

@@ -1,0 +1,31 @@
+# Example 1:
+# The following program computes the first 12 Fibonacci numbers and stores
+# them in the first 12 bytes in the data memory.
+
+.data
+	A:     .space 12
+	B:     .space 1
+
+.text
+MAIN:
+  LA        $4,  A
+  LA        $5,  B
+  ADD       $1,  $0,  $0    #
+  ADDI      $2,  $0,  1 	#
+LOOP:
+  SB        $1,  0($4)
+  ADD       $3,   $1, $2    # $3 = $1 + $2
+  ADD       $1,   $0,  $2   # $1 = $2
+  ADD       $2,   $0,  $3   # $2 = $3
+  ADDI      $4,   $4,  1    # $4 += 1
+  BNE       $4,   $5,  LOOP
+  LA        $7,  A
+  LB        $1,  1($7)
+  LB        $2,  2($7)
+  LB        $3,  3($7)
+  LB        $4,  4($7)
+  LB        $5,  5($7)
+  LB        $6,  6($7)
+  LB        $7,  7($7)
+EXIT:
+	stop
